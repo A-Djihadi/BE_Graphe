@@ -201,20 +201,28 @@ public class Path {
      * @deprecated Need to be implemented.
      */
     public boolean isValid() {
-        // TODO:
-        return false;
+    	   if (!this.isEmpty()) {
+               return false;
+           }
+           if (this.getArcs().size() != 0) {
+               return false;
+           }
+           return true;
     }
 
     /**
      * Compute the length of this path (in meters).
      * 
-     * @return Total length of the path (in meters).
+     * Total length of the path (in meters).
      * 
-     * @deprecated Need to be implemented.
+     * Need to be implemented.
      */
     public float getLength() {
-        // TODO:
-        return 0;
+    	float totalLength = 0.0f;
+    	for(Arc arc : this.arcs) {
+    		totalLength += arc.getLength();
+    	}
+        return totalLength;
     }
 
     /**
@@ -228,8 +236,10 @@ public class Path {
      * @deprecated Need to be implemented.
      */
     public double getTravelTime(double speed) {
-        // TODO:
-        return 0;
+        double temps = 0.0;
+        float longueur = getLength();
+        temps = longueur/(speed*(1000.0/3600.0));
+        return temps;
     }
 
     /**
