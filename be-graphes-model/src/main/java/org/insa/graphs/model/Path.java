@@ -210,7 +210,7 @@ public class Path {
 	       else {
 	    	   Node origine = this.getOrigin();
 	    	   for (Arc arc : this.arcs) {
-	    		   if (!origine.equals(arc.getOrigin())) {
+	    		   if (origine != arc.getOrigin()) {
 	    			   return false;
 	    		   }
 	    		   origine = arc.getDestination();
