@@ -35,7 +35,31 @@ public class Path {
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
         List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        if(nodes.size()==1) {
+        	return new Path(graph, nodes.get(0));
+        }
+        for(int i=0; i<nodes.size()-1; i++) { // Parcours des noeuds dans l'orde 
+        	Node node_actuel= nodes.get(i);
+        	if(node_actuel.hasSuccessors()) { // Véridie si le noeud a une succeseur
+        		List<Arc> arc_suiv = node_actuel.getSuccessors();
+        		double travel_time = 10000000;
+        		int num=0;
+        		boolean successor_found = false ;
+        		for(int j=0; j<arc_suiv.size();j++) {
+        			if((arc_suiv.get(j).getDestination().compareTo(nodes.get(i+1)) == 0 ) && (arc_suiv.get(j).getMinimumTravelTime()< travel_time)) {
+        				num=j;
+        				travel_time=arc_suiv.get(num).getMinimumTravelTime();
+        				successor_found = true;
+        			}	
+        		}
+        		if(successor_found== false) {
+        			throw new IllegalArgumentException();
+        		}
+        		arcs.add(arc_suiv.get(num));
+        	}else {
+        		throw new IllegalArgumentException();
+        	}
+        }
         return new Path(graph, arcs);
     }
 
@@ -55,8 +79,32 @@ public class Path {
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        List<Arc> arcs = new ArrayList<Arc>();  
+        if(nodes.size()==1) {
+        	return new Path(graph, nodes.get(0));
+        }
+        for(int i=0; i<nodes.size()-1; i++) { // Parcours des noeuds dans l'orde 
+        	Node node_actuel= nodes.get(i);
+        	if(node_actuel.hasSuccessors()) { // Véridie si le noeud a une succeseur
+        		List<Arc> arc_suiv = node_actuel.getSuccessors();
+        		int num=0;
+        		double length = 1000000;
+        		boolean successor_found = false ;
+        		for(int j=0; j<arc_suiv.size();j++) {
+        			if((arc_suiv.get(j).getDestination().compareTo(nodes.get(i+1)) == 0) && (arc_suiv.get(j).getLength() < length)) {
+                        num = j;
+                        length = arc_suiv.get(num).getLength();
+                        successor_found = true;
+                    }	
+        		}
+        		if(successor_found== false) {
+        			throw new IllegalArgumentException();
+        		}
+        		arcs.add(arc_suiv.get(num));
+        	}else {
+        		throw new IllegalArgumentException();
+        	}
+        }
         return new Path(graph, arcs);
     }
 
