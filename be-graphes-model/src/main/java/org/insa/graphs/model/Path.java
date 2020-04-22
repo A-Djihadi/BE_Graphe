@@ -201,15 +201,26 @@ public class Path {
      * @deprecated Need to be implemented.
      */
     public boolean isValid() {
-    	   if (!this.isEmpty()) {
-               return false;
+    	   if (this.isEmpty()) {
+               return true;
            }
-           if (this.getArcs().size() != 0) {
-               return false;
+    	   else if (this.size() == 1) {
+               return true;
            }
-           return true;
-    }
-
+	       else {
+	    	   Node origine = this.getOrigin();
+	    	   for (Arc arc : this.arcs) {
+	    		   if (!origine.equals(arc.getOrigin())) {
+	    			   return false;
+	    		   }
+	    		   origine = arc.getDestination();
+	    	   } 			
+	    	}
+    	   
+    	   return true;
+           }
+	       
+ 
     /**
      * Compute the length of this path (in meters).
      * 
@@ -251,8 +262,11 @@ public class Path {
      * @deprecated Need to be implemented.
      */
     public double getMinimumTravelTime() {
-        // TODO:
-        return 0;
+        double temps = 0;
+        for(Arc myArc : this.arcs) {
+        	temps+= myArc.getMinimumTravelTime();
+        }
+        return temps;
     }
 
 }
