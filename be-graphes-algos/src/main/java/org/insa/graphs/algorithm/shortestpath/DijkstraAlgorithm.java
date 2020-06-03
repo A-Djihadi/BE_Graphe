@@ -36,11 +36,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         
         notifyOriginProcessed(data.getOrigin());
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////INITIALISATION/////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+// -----------------initialisation-------------------------------------------------
+
         BinaryHeap<Label> tas = new BinaryHeap<Label>();
+        
         ArrayList<Label> labels = new ArrayList<Label>();
+        
         //On initialise tous les labels à +infini, avec marque à false et pere à NULL
         for (int i = 0; i < nbNodes; i++) {
         	labels.add(new Label(nodes.get(i)));
@@ -49,13 +50,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         labels.get(index_origine).setCost(0);
         //On insère le label actualisé dans le tas
         tas.insert(labels.get(index_origine));
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////INITIALISATION/////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-        
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////ITERATIONS//////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////
+
+//--------------------Boucle d'iteration-------------------------------------------
         
         //Définition d'une variable pour compter le nombre d'itérations pour le debogage
         int nbIterations = 0;
@@ -71,7 +67,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	//Vérification de la taille du tas
         	System.out.println("Taille du tas : " + tas.size());
         	
-        	//Debogage
+        	//Sortie debogueur 
+        	
         	//Incrémentation du nombre d'itérations
         	nbIterations++;
         	//Verification du tas
@@ -82,11 +79,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         		System.out.println("Tas non valide");
         	}
         	
-        	
         	//On récupère les arcs successeurs du label minimal
         	List<Arc> arcs = label_min.getNode().getSuccessors();
         	
-        	//Debogage
+        	//Sortie debogueur
         	System.out.println("Nb successeurs du label : " + arcs.size());
         	
         	for (int i = 0; i < arcs.size(); i++) {
@@ -118,13 +114,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         		}
         	}
         }
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////ITERATIONS//////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////
         
-        /////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////CREATION DE LA SOLUTION////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------On crée notre solution -------------------------------------
         ShortestPathSolution solution = null;
         
         //La destination n'a pas de prédécesseur, le chemin est infaisable
@@ -169,11 +160,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             }
             
         }
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////CREATION DE LA SOLUTION////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////
-
         return solution;
     }
+   
 
 }
